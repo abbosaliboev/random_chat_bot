@@ -4,8 +4,6 @@ import json
 from aiogram import Bot, Dispatcher
 from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton
 from aiogram.filters import Command
-import flask
-import requests
 
 # Bot tokeni
 API_TOKEN = '7892328849:AAF-GW_43V2eG3gxcvIQ-E2LKpuKmMw9X54'
