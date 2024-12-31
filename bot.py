@@ -4,7 +4,24 @@ import json
 from aiogram import Bot, Dispatcher
 from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton
 from aiogram.filters import Command
+from flask import Flask
+from threading import Thread
 
+# Flask serverni yaratamiz
+app = Flask('')
+
+@app.route('/')
+def home():
+    return "I'm alive!"
+
+def run():
+    app.run(host='0.0.0.0', port=8080)
+
+def keep_alive():
+    t = Thread(target=run)
+    t.start()
+
+    
 # Bot tokeni
 API_TOKEN = '7892328849:AAF-GW_43V2eG3gxcvIQ-E2LKpuKmMw9X54'
 
@@ -194,8 +211,15 @@ async def forward_message(message: Message):
 # Botni ishga tushirish
 async def main():
     import atexit
+    # Ma'lumotlarni saqlash funksiyasini dastur to'xtaganda ishga tushirish
     atexit.register(lambda: save_data({"users": users, "active_chats": active_chats, "blocked_users": blocked_users}))
+
+    # Flask serverni ishga tushiramiz
+    keep_alive()
+
+    # Telegram botni ishlatamiz
     await dp.start_polling(bot)
 
+# Pythondagi asosiy ishga tushirish
 if __name__ == "__main__":
     asyncio.run(main())
